@@ -5,44 +5,18 @@ import { addBook } from '../actions';
 
 
 class BookAdd extends React.Component{
-
-  constructor (props){
-    super(props);
-
-    //this.book = new Book('','','','');
-    console.log(props);
-  }
-
+  state = new Book('', '', '', '');
 
   onAdd = (event) => {
     event.preventDefault();
-    let book = new Book(
-      document.getElementById('iban').value,
-      document.getElementById('title').value,
-      document.getElementById('date_publication').value,
-      document.getElementById('prix').value
-    );
-    this.props.addBook(book);
+    this.props.addBook(this.state);
   }
 
-  /*
-  onChangeIban = (e) =>{
-    this.book.iban = e.target.value;
+  handleInputChange = (e) => {
+    this.setState({
+      [e.target.name] : e.target.value
+    })
   }
-
-  onChangeTitle = (e) =>{
-    this.book.title = e.target.value;
-  }
-
-  onChangeDate_publication = (e) =>{
-    this.book.date_publication = e.target.value;
-  }
-
-  onChangePrix = (e) =>{
-    this.book.prix = e.target.value;
-  }
-  */
-
 
 
   render = () => {
@@ -52,19 +26,19 @@ class BookAdd extends React.Component{
         <form onSubmit={this.onAdd}>
           <div className="mb-3">
             <label htmlFor="iban">Iban</label>
-            <input type="text" name="iban" id="iban" className="form-control" defaulvalue="" />
+            <input type="text" name="iban" id="iban" className="form-control" value={this.state.iban} onChange={this.handleInputChange} />
           </div>
           <div className="mb-3">
             <label htmlFor="title">Titre</label>
-            <input type="text" name="title" id="title" className="form-control" defaulvalue="" />
+            <input type="text" name="title" id="title" className="form-control" value={this.state.title} onChange={this.handleInputChange} />
           </div>
           <div className="mb-3">
             <label htmlFor="date_publication">Date de publication</label>
-            <input type="date" name="date_publication" id="date_publication" className="form-control" defaulvalue=""/>
+            <input type="date" name="date_publication" id="date_publication" className="form-control" value={this.state.date_publication} onChange={this.handleInputChange}/>
           </div>
           <div className="mb-3">
             <label htmlFor="prix">Prix</label>
-            <input type="number" name="prix" id="prix" className="form-control" defaulvalue=""/>
+            <input type="number" name="prix" id="prix" className="form-control" value={this.state.prix} onChange={this.handleInputChange}/>
           </div>
           <div>
             <input type="submit" className="btn btn-primary" value="Ajouter" />
@@ -77,8 +51,8 @@ class BookAdd extends React.Component{
 }
 
 const mapStateToProps = (state)=>{
-  console.log(state);
-  return { books : state.books}
+  console.log(state)
+  return state
 }
 
 export default connect(mapStateToProps, {addBook})(BookAdd);

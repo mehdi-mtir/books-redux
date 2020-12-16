@@ -6,10 +6,12 @@ import { createStore } from 'redux';
 import reducers from './reducers';
 
 
-ReactDOM.render(
-  <Provider store={createStore(reducers)}>
-    <App />
 
+const store = createStore(reducers);
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
   </Provider>
   ,
   document.querySelector('#root')

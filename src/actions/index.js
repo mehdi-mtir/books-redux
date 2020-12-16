@@ -20,3 +20,20 @@ export const deleteBook = (indice) =>{
     payload : { indice }
   }
 }
+
+export const updateIndex = (indice) => {
+
+  return {
+    type : 'UPDATE_INDEX',
+    payload : { indice }
+  }
+
+}
+
+/*
+export const showBookToEdit = (indice) => {
+  return {
+    type : 'BOOK_TO_EDIT',
+    payload : {indice}
+  }
+}*/

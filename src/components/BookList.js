@@ -1,13 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { deleteBook , updateIndex} from '../actions';
 
 class BookList extends React.Component{
+
+  onDelete = (event)=>{
+    //console.log(event.target.dataset.indice);
+    this.props.deleteBook(event.target.dataset.indice);
+  }
+
+  onShow = (event)=>{
+    this.props.updateIndex(+event.target.dataset.indice);
+  }
 
   render(){
     return (
       <div>
       <h1>Liste des livres</h1>
-      <input type="button" className="btn btn-success" value="Ajouter" />
+      <input type="button" className="btn btn-success" value="Ajouter" data-indice='-1' onClick={this.onShow}  />
       <table className="table">
         <thead>
           <tr>
@@ -22,7 +32,7 @@ class BookList extends React.Component{
         <tbody>
 
         {
-          this.props.books.map(
+          this.props.state.books.map(
           (book, index) => {
             return (
               <tr key={index}>
@@ -30,8 +40,8 @@ class BookList extends React.Component{
                 <td>{book.title}</td>
                 <td>{book.date_publication}</td>
                 <td>{book.prix}</td>
-                <td><input type="button" className="btn btn-info" value="Editer" data-indice={index} /></td>
-                <td><input type="button" className="btn btn-danger" value="Supprimer" data-indice={index}/></td>
+                <td><input type="button" className="btn btn-info" value="Editer" data-indice={index} onClick={this.onShow} /></td>
+                <td><input type="button" className="btn btn-danger" value="Supprimer" data-indice={index} onClick={this.onDelete}/></td>
               </tr>
             )
           })
@@ -47,8 +57,8 @@ class BookList extends React.Component{
 }
 
 const mapStateToProps = (state)=>{
-  console.log(state);
-  return {books : state.books}
+  //console.log(state);
+  return state;
 }
 
-export default connect(mapStateToProps)(BookList);
+export default connect(mapStateToProps, {deleteBook, updateIndex})(BookList);
